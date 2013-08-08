@@ -58,10 +58,12 @@ var svg = d3.select("body").append("svg")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 // load data
-d3.csv("data.csv", type, function(error, data) {
+d3.csv("cereal.csv", type, function(error, data) {
 
-  x.domain(d3.extent(data, function(d) { return d.HP; })).nice();
-  y.domain(d3.extent(data, function(d) { return d["Wheel Base"]; })).nice();
+//  x.domain(d3.extent(data, function(d) { return d.Calories; })).nice();
+//  y.domain(d3.extent(data, function(d) { return d["Protein (g)"]; })).nice();
+  x.domain([d3.min(data, function(d) {return d.Calories;})-1, d3.max(data, function(d) { return d.Calories; })+1]).nice();
+  y.domain ([d3.min(data, function(d) {return d["Protein (g)"];})-1, d3.max(data, function(d) {return d["Protein (g)"];})+1]).nice();
 
   // x-axis
   svg.append("g")
@@ -73,7 +75,7 @@ d3.csv("data.csv", type, function(error, data) {
       .attr("x", width)
       .attr("y", -6)
       .style("text-anchor", "end")
-      .text("Horsepower");
+      .text("Calories");
 
   // y-axis
   svg.append("g")
@@ -85,7 +87,7 @@ d3.csv("data.csv", type, function(error, data) {
       .attr("y", 6)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .text("Wheel Base");
+      .text("Protein (g)");
 
   // draw dots
   svg.selectAll(".dot")
@@ -93,10 +95,11 @@ d3.csv("data.csv", type, function(error, data) {
     .enter().append("circle")
       .attr("class", "dot")
       .attr("r", 3.5)
-      .attr("cx", function(d) { return x(d.HP); })
-      .attr("cy", function(d) { return y(d["Wheel Base"]); })
+      .attr("cx", function(d) { return x(d.Calories); })
+      .attr("cy", function(d) { return y(d["Protein (g)"]); })
+      .style("fill", function(d) { return color(d.Manufacturer);}) 
       .on("mouseover", hover)
-      .style("fill", function(d) { return color(d["Sports Car"]); });
+
 
   // draw legend
   var legend = svg.selectAll(".legend")
@@ -116,21 +119,22 @@ d3.csv("data.csv", type, function(error, data) {
       .attr("y", 9)
       .attr("dy", ".35em")
       .style("text-anchor", "end")
-      .text(function(d) { return ((d==1)?"Sports Cars":"Others");})
+      .text(function(d) { return d;})
 
 });
 
 function hover(d) {
 // work on this not relying on #tooltip
   d3.select("#tooltip")
-    .html("<br/><span style='color:black'>" + d["Vehicle Name"] + "</span>");
+    .html("<br/><span style='color:black'>" + d["Cereal Name"] 
+    + "<br/> (" + d.Calories + ", " + d["Protein (g)"] + ")</span>");
 }
 
 function type(d) {
-// change string into number format
-  d.HP = +d.HP;
-  d["Wheel Base"] = +d["Wheel Base"];
-//  console.log ("d.HP = ", d.HP, "d[Wheel Base] = ", d["Wheel Base"]);
+  // change string into number format
+  d.Calories = +d.Calories;
+  d["Protein (g)"] = +d["Protein (g)"];
+//  console.log ("d.Calories = ", d.Calories, "d[Protein (g)] = ", d["Protein (g)"]);
   return d;
 }
 
