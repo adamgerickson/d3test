@@ -60,7 +60,7 @@ var svg = d3.select("body").append("svg")
 // load data
 d3.csv("data.csv", type, function(error, data) {
 
-  x.domain(d3.extent(data, function(d) { return d.Cyl; })).nice();
+  x.domain(d3.extent(data, function(d) { return d.HP; })).nice();
   y.domain(d3.extent(data, function(d) { return d["Wheel Base"]; })).nice();
 
   // x-axis
@@ -73,7 +73,7 @@ d3.csv("data.csv", type, function(error, data) {
       .attr("x", width)
       .attr("y", -6)
       .style("text-anchor", "end")
-      .text("Cylinders");
+      .text("Horsepower");
 
   // y-axis
   svg.append("g")
@@ -93,11 +93,12 @@ d3.csv("data.csv", type, function(error, data) {
     .enter().append("circle")
       .attr("class", "dot")
       .attr("r", 3.5)
-      .attr("cx", function(d) { return x(d.Cyl); })
+      .attr("cx", function(d) { return x(d.HP); })
       .attr("cy", function(d) { return y(d["Wheel Base"]); })
       .on("mouseover", hover)
-      .style("fill", function(d) { return color(d["SUV"]); });
+      .style("fill", function(d) { return color(d["Sports Car"]); });
 
+  // draw legend
   var legend = svg.selectAll(".legend")
       .data(color.domain())
     .enter().append("g")
@@ -115,7 +116,7 @@ d3.csv("data.csv", type, function(error, data) {
       .attr("y", 9)
       .attr("dy", ".35em")
       .style("text-anchor", "end")
-      .text(function(d) { return d; });
+      .text(function(d) { return ((d==1)?"Sports Cars":"Others");})
 
 });
 
@@ -127,9 +128,9 @@ function hover(d) {
 
 function type(d) {
 // change string into number format
-  d.Cyl = +d.Cyl;
+  d.HP = +d.HP;
   d["Wheel Base"] = +d["Wheel Base"];
-//  console.log ("d.Cyl = ", d.Cyl, "d[Wheel Base] = ", d["Wheel Base"]);
+//  console.log ("d.HP = ", d.HP, "d[Wheel Base] = ", d["Wheel Base"]);
   return d;
 }
 
