@@ -61,7 +61,7 @@ var svg = d3.select("body").append("svg")
 d3.csv("data.csv", type, function(error, data) {
 
   x.domain(d3.extent(data, function(d) { return d.Cyl; })).nice();
-  y.domain(d3.extent(data, function(d) { return d["Engine Size (l)"]; })).nice();
+  y.domain(d3.extent(data, function(d) { return d["Wheel Base"]; })).nice();
 
   // x-axis
   svg.append("g")
@@ -85,7 +85,7 @@ d3.csv("data.csv", type, function(error, data) {
       .attr("y", 6)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .text("Engine Size (l)");
+      .text("Wheel Base");
 
   // draw dots
   svg.selectAll(".dot")
@@ -94,7 +94,7 @@ d3.csv("data.csv", type, function(error, data) {
       .attr("class", "dot")
       .attr("r", 3.5)
       .attr("cx", function(d) { return x(d.Cyl); })
-      .attr("cy", function(d) { return y(d["Engine Size (l)"]); })
+      .attr("cy", function(d) { return y(d["Wheel Base"]); })
       .on("mouseover", hover)
       .style("fill", function(d) { return color(d["SUV"]); });
 
@@ -128,8 +128,8 @@ function hover(d) {
 function type(d) {
 // change string into number format
   d.Cyl = +d.Cyl;
-  d["Engine Size (l)"] = +d["Engine Size (l)"];
-//  console.log ("d.Cyl = ", d.Cyl, "d[Engine Size (l)] = ", d["Engine Size (l)"]);
+  d["Wheel Base"] = +d["Wheel Base"];
+//  console.log ("d.Cyl = ", d.Cyl, "d[Wheel Base] = ", d["Wheel Base"]);
   return d;
 }
 
