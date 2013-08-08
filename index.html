@@ -58,7 +58,7 @@ var svg = d3.select("body").append("svg")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 // load data
-d3.csv("04cars.csv", type, function(error, data) {
+d3.csv("data.csv", type, function(error, data) {
 
   x.domain(d3.extent(data, function(d) { return d.Cyl; })).nice();
   y.domain(d3.extent(data, function(d) { return d["Engine Size (l)"]; })).nice();
