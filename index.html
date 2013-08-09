@@ -60,8 +60,6 @@ var svg = d3.select("body").append("svg")
 // load data
 d3.csv("cereal.csv", type, function(error, data) {
 
-//  x.domain(d3.extent(data, function(d) { return d.Calories; })).nice();
-//  y.domain(d3.extent(data, function(d) { return d["Protein (g)"]; })).nice();
   x.domain([d3.min(data, function(d) {return d.Calories;})-1, d3.max(data, function(d) { return d.Calories; })+1]).nice();
   y.domain ([d3.min(data, function(d) {return d["Protein (g)"];})-1, d3.max(data, function(d) {return d["Protein (g)"];})+1]).nice();
 
