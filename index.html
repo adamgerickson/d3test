@@ -63,9 +63,9 @@
     //    console.log(d);
       });
 
-      // don't want dots overlapping axis, so add in buffer to data domain
-      xScale.domain([d3.min(data, xValue)-1, d3.max(data, xValue)+1]);
-      yScale.domain([d3.min(data, yValue)-1, d3.max(data, yValue)+1]);
+      // // don't want dots overlapping axis, so add in buffer to data domain
+      // xScale.domain([d3.min(data, xValue)-1, d3.max(data, xValue)+1]);
+      // yScale.domain([d3.min(data, yValue)-1, d3.max(data, yValue)+1]);
 
 
 
@@ -84,6 +84,10 @@
         yScale = d3.scaleLinear().range([height, 0]), // value -> display
         yMap = function(d) { return yScale(yValue(d));}, // data -> display
         yAxis = d3.svg.axis().scale(yScale).orient("left");
+
+    // don't want dots overlapping axis, so add in buffer to data domain
+     xScale.domain([d3.min(data, xValue)-1, d3.max(data, xValue)+1]);
+     yScale.domain([d3.min(data, yValue)-1, d3.max(data, yValue)+1]);
 
     // setup fill color
     var cValue = function(d) { return d.Manufacturer;},
